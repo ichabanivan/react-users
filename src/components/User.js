@@ -1,12 +1,6 @@
 import React, {Component} from 'react';
-import $ from 'jquery'
 import { connect } from 'react-redux'
-import {drawTable} from 'actions/'
-/**
- * Styles for application
- */
-import '../../node_modules/normalize.css/normalize.css';
-import 'assets/css/style.scss';
+
 import {removeUser} from 'actions/'
 const mapStateToProps = (state) => {
   return {users: state.Users}
@@ -15,7 +9,7 @@ const mapStateToProps = (state) => {
 @connect(mapStateToProps, {removeUser})
 export default class User extends Component {
   constructor(props) {
-    super(props)
+    super(props);
   }
 
   mapRecursion = (obj) => {
@@ -24,11 +18,11 @@ export default class User extends Component {
       this.mapRecursion(obj[prop])
     )
     : `${obj} `
-  }
+  };
 
   removeUser = () => {
     this.props.removeUser(this.props.obj)
-  }
+  };
 
   
   render() {

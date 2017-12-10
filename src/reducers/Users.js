@@ -13,11 +13,10 @@ let initialState = [{
 }];
 
 export default function Users(state = initialState, action) {
-  console.log(action)
   switch (action.type) {
     case ACTIONS.DRAW_TABLE:
       let users = [];
-      console.log(action, '+++++++++++++++')
+
       action.users.map( user => {
         let u = {
           id: user['id'],
@@ -28,14 +27,13 @@ export default function Users(state = initialState, action) {
         };
         users.push(u)
       });
-
       return users;
     case ACTIONS.REMOVE_USER:
       return state.filter((user) => action.user.id !== user.id);
     case ACTIONS.ADD_USER:
-      let withNewUser = [...state]
-      action.id = Date.now()
-      withNewUser.push(action.user)
+      let withNewUser = [...state];
+      action.id = Date.now();
+      withNewUser.push(action.user);
       return withNewUser;
     default:
       return state;

@@ -40,18 +40,18 @@ let initialState = {
 };
 
 export default function Count(state = initialState, action) {
-  console.log(action)
+  console.log(action);
   switch (action.type) {
     case ACTIONS.COUNT:
       let rate, {from, to, value} = action.data;
-      console.log( {from, to, value})
+      console.log( {from, to, value});
 
       if (from === to) {
         rate = 1;
       } else {
         rate = action.currency.rates[to];
       }
-      let count = rate * +value;
+      let count = (rate * +value).toFixed(2);
       return {
         ...state,
         count

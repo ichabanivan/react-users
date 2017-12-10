@@ -1,15 +1,12 @@
 import React, {Component} from 'react';
 import $ from 'jquery'
-/**
- * Styles for application
- */
-import '../../node_modules/normalize.css/normalize.css';
-import 'assets/css/style.scss';
-
 import {count} from 'actions/'
 import { connect } from 'react-redux'
+
 const mapStateToProps = (state) => {
-  return {carency: state.Count}
+  return {
+    currency: state.Count
+  }
 };
 
 @connect(mapStateToProps, {count})
@@ -22,27 +19,27 @@ export default class Currency extends Component {
     from: 'USD',
     to: 'USD',
     value: 1
-  }
+  };
   
   changeFrom(e) {
     this.setState({
       from: e.target.value
-    })
+    });
   }
 
   changeTo(e) {
     this.setState({
       to: e.target.value
-    })
+    });
   }
 
   onInput(e) {
     this.setState({
       value: e.target.value
-    })
+    });
   }
 
-  onCalc(e) {
+  onCalc() {
     let self = this;
     $.ajax({
       url: `https://api.fixer.io/latest?base=${this.state.from}`,
@@ -50,7 +47,6 @@ export default class Currency extends Component {
         self.props.count(currency, self.state)
       }
     })
-
   }
 
   render() {
@@ -82,14 +78,14 @@ export default class Currency extends Component {
                 </div>
             </div>
             <div className="form-group">
-                <input type="number" className="form-control" placeholder="Enter value" onChange={::this.onInput}/>
+                <input type="number" className="form-control" placeholder="Enter value" onChange={::this.onInput} value={this.state.value}/>
             </div>
             <div className="form-group">
-                <button type="button" className="btn btn-info" onClick={::this.onCalc}>Calculate</button>
+                <button type="button" className="btn btn-info" onClick={::this.onCalc}><i className="fa fa-calculator" aria-hidden="true" /> Calculate</button>
             </div>
             <div className="form-group">
                 <div className="help-block">Result:</div>
-                <div className="help-block">{this.props.carency.count}</div>
+                <div className="help-block"><i className="fa fa-money currency__sign" aria-hidden="true" />{this.props.currency.count}</div>
             </div>
         </form>
       </div>
