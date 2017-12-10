@@ -1,34 +1,27 @@
 import React, {Component} from 'react';
-
+import $ from 'jquery'
 /**
  * Styles for application
  */
 import '../../node_modules/normalize.css/normalize.css';
 import 'assets/css/style.scss';
 
+import {count} from 'actions/'
+import { connect } from 'react-redux'
+const mapStateToProps = (state) => {
+  return {carency: state.Count}
+};
+
+@connect(mapStateToProps, {count})
 export default class Currency extends Component {
   constructor(props) {
-    super(props)
-    
-    this.countCurrency = ::this.countCurrency;
+    super(props);
   }
 
   state = {
     from: 'USD',
     to: 'USD',
-    value: 0
-  }
-  
-  countCurrency() {
-    let self = this;
-    $.ajax({
-      url: "https://api.fixer.io/latest",
-      success: function(currency){
-          console.log(currency)
-        // self.props.drawTable(currency)
-      }
-    })
-    
+    value: 1
   }
   
   changeFrom(e) {
@@ -43,16 +36,21 @@ export default class Currency extends Component {
     })
   }
 
-  changeTo(e) {
-    this.setState({
-      to: e.target.value
-    })
-  }
-
   onInput(e) {
     this.setState({
       value: e.target.value
     })
+  }
+
+  onCalc(e) {
+    let self = this;
+    $.ajax({
+      url: `https://api.fixer.io/latest?base=${this.state.from}`,
+      success: function(currency){
+        self.props.count(currency, self.state)
+      }
+    })
+
   }
 
   render() {
@@ -75,7 +73,7 @@ export default class Currency extends Component {
                 <div className="col-sm-6">
                     <div className="form-group">
                         <label htmlFor="from_currency">To:</label>
-                        <select className="form-control">
+                        <select className="form-control" onChange={::this.changeTo}>
                             <option>USD</option>
                             <option>EUR</option>
                             <option>RUB</option>
@@ -87,11 +85,11 @@ export default class Currency extends Component {
                 <input type="number" className="form-control" placeholder="Enter value" onChange={::this.onInput}/>
             </div>
             <div className="form-group">
-                <button type="button" className="btn btn-info">Calculate</button>
+                <button type="button" className="btn btn-info" onClick={::this.onCalc}>Calculate</button>
             </div>
             <div className="form-group">
                 <div className="help-block">Result:</div>
-                <div className="help-block"></div>
+                <div className="help-block">{this.props.carency.count}</div>
             </div>
         </form>
       </div>

@@ -20,3 +20,9 @@ export const addUser = (user) => ({
   type: ACTIONS.ADD_USER,
   user
 });
+
+export const count = (currency, data) => ({
+  type: ACTIONS.COUNT,
+  currency,
+  data
+});
