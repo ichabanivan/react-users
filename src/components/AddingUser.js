@@ -13,8 +13,7 @@ export default class AddingUser extends Component {
     name: 'Leanne Grahama',
     email: 'Sincere@april.biza',
     phone: '1-770-736-8031 x564421',
-    company: 'Romaguera-Cronaw',
-    buttonDisabled: false
+    company: 'Romaguera-Cronaw'
   };
 
   changeName = (e) => {

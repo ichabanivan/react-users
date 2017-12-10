@@ -31,6 +31,7 @@ export default function Users(state = initialState, action) {
     case ACTIONS.REMOVE_USER:
       return state.filter((user) => action.user.id !== user.id);
     case ACTIONS.ADD_USER:
+      console.log(action)
       let withNewUser = [...state];
       action.id = Date.now();
       withNewUser.push(action.user);
