@@ -10,3 +10,13 @@ export const drawTable = (users) => ({
   type: ACTIONS.DRAW_TABLE,
   users
 });
+
+export const removeUser = (user) => ({
+  type: ACTIONS.REMOVE_USER,
+  user
+});
+
+export const addUser = (user) => ({
+  type: ACTIONS.ADD_USER,
+  user
+});

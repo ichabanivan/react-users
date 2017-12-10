@@ -4,7 +4,11 @@
  */
 
 const DRAW_TABLE = 'DRAW_TABLE';
+const REMOVE_USER = 'REMOVE_USER';
+const ADD_USER = 'ADD_USER';
 
 export default {
-  DRAW_TABLE
+  DRAW_TABLE,
+  REMOVE_USER,
+  ADD_USER
 };

@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import $ from 'jquery'
 import { connect } from 'react-redux'
-import {drawTable} from 'actions/'
+import {drawTable, removeUser} from 'actions/'
+import User from './User'
 /**
  * Styles for application
  */
@@ -12,10 +13,12 @@ const mapStateToProps = (state) => {
   return {users: state.Users}
 };
 
-@connect(mapStateToProps, {drawTable})
+@connect(mapStateToProps, {drawTable, removeUser})
 export default class Users extends Component {
   constructor(props) {
     super(props)
+
+    // this.removeUser = ::this.removeUser
   }
  
   componentWillMount() {
@@ -28,50 +31,54 @@ export default class Users extends Component {
     })
   }
 
-  mapRecursion = (obj) => {
-    console.log(obj)
-    return obj instanceof Object
-    ? Object.keys(obj).map((prop) =>
-      this.mapRecursion(obj[prop])
-    )
-    : `${obj} `
-  }
+  // mapRecursion = (obj) => {
+  //   return obj instanceof Object
+  //   ? Object.keys(obj).map((prop) =>
+  //     this.mapRecursion(obj[prop])
+  //   )
+  //   : `${obj} `
+  // }
+  //
+  // removeUser(a) {
+  //   console.log(a)
+  // }
   
   render() {
     const {
       users
     } = this.props;
+    let headingTable = users.length ? headingTable = Object.keys(users[0]) : null;
 
-    let headingTable = Object.keys(users[0]);
     return (
       <div>
         <div className="h2">Users</div>
-        <table className="table table-hover">
+        {
+          users.length ?
+          <table className="table table-hover">
                     <thead>
                         <tr>
-                          {headingTable.map( (text) =>
-                            <th>{text}</th>
+                          {headingTable.map( (text, key) =>
+                          <th key={key}>{text}</th>
                           )}
+                          <th />
                         </tr>
                     </thead>
                     <tbody>
                     {
-                      users.map( user =>
-                        <tr key={user.id}>
-                          {
-                            Object.keys(user).map( (key) => ( <td>{this.mapRecursion(user[key])}</td>))
-                          }
-                        </tr>
+                      users.map( ( user, key) =>
+                      <User key={key} obj={user} />
                       )
                     }
                     </tbody>
             </table>
-
-        <div class="panel panel-default">
+          : <div class="panel panel-default">
                 <div class="panel-body">
                 No users found.
                 </div>
             </div>
+        }
+
+
       </div>
     );
   }

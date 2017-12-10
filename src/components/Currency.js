@@ -9,7 +9,52 @@ import 'assets/css/style.scss';
 export default class Currency extends Component {
   constructor(props) {
     super(props)
+    
+    this.countCurrency = ::this.countCurrency;
   }
+
+  state = {
+    from: 'USD',
+    to: 'USD',
+    value: 0
+  }
+  
+  countCurrency() {
+    let self = this;
+    $.ajax({
+      url: "https://api.fixer.io/latest",
+      success: function(currency){
+          console.log(currency)
+        // self.props.drawTable(currency)
+      }
+    })
+    
+  }
+  
+  changeFrom(e) {
+    this.setState({
+      from: e.target.value
+    })
+  }
+
+  changeTo(e) {
+    this.setState({
+      to: e.target.value
+    })
+  }
+
+  changeTo(e) {
+    this.setState({
+      to: e.target.value
+    })
+  }
+
+  onInput(e) {
+    this.setState({
+      value: e.target.value
+    })
+  }
+
   render() {
     return (
       <div>
@@ -20,7 +65,7 @@ export default class Currency extends Component {
                 <div className="col-sm-6">
                     <div className="form-group">
                         <label htmlFor="from_currency">From:</label>
-                        <select className="form-control">
+                        <select className="form-control" onChange={::this.changeFrom}>
                             <option>USD</option>
                             <option>EUR</option>
                             <option>RUB</option>
@@ -39,7 +84,7 @@ export default class Currency extends Component {
                 </div>
             </div>
             <div className="form-group">
-                <input type="text" className="form-control" placeholder="Enter value" />
+                <input type="number" className="form-control" placeholder="Enter value" onChange={::this.onInput}/>
             </div>
             <div className="form-group">
                 <button type="button" className="btn btn-info">Calculate</button>
