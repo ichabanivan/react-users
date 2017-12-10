@@ -31,8 +31,6 @@ body {
   min-width: 320px;
   margin: 0;
   padding: 0;
-  background: -webkit-linear-gradient(left, #25c481, #25b7c4);
-  background: linear-gradient(to right, #25c481, #25b7c4);
   font-family: 'Roboto', sans-serif;
   line-height: 1.5;
 }
@@ -46,4 +44,8 @@ body {
   margin: -1px;
   padding: 0;
   border: 0;
+}
+
+.show-on-hover {
+  cursor: pointer;
 }

@@ -6,13 +6,26 @@ import 'assets/css/style.scss';
 
 import React, { Component } from 'react';
 
+import Users from 'components/Users'
+import AddingUser from 'components/AddingUser'
+import Currency from 'components/Currency'
+
 export default class App extends Component {
   constructor(props) {
     super(props)
   }
   render() {
     return (
-        <h1>Hello</h1>
+      <div>
+        <div id="wrapper">
+          <div className="container">
+            <div className="h2">Users</div>
+            <Users />
+            <AddingUser />
+            <Currency />
+          </div>
+        </div>
+      </div>
     );
 	}
 }
