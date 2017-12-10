@@ -3,8 +3,8 @@
  * Constants for avoid errors
  */
 
-const SOME_ACTION = 'SOME_ACTION';
+const DRAW_TABLE = 'DRAW_TABLE';
 
 export default {
-  SOME_ACTION
+  DRAW_TABLE
 };

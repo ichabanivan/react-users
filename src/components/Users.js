@@ -1,44 +1,69 @@
 import React, {Component} from 'react';
-
+import $ from 'jquery'
+import { connect } from 'react-redux'
+import {drawTable} from 'actions/'
 /**
  * Styles for application
  */
 import '../../node_modules/normalize.css/normalize.css';
 import 'assets/css/style.scss';
 
+const mapStateToProps = (state) => {
+  return {users: state.Users}
+};
+
+@connect(mapStateToProps, {drawTable})
 export default class Users extends Component {
   constructor(props) {
     super(props)
   }
+ 
+  componentWillMount() {
+    let self = this;
+    $.ajax({
+      url: "https://jsonplaceholder.typicode.com/users",
+      success: function(users){
+        self.props.drawTable(users)
+      }
+    })
+  }
+
+  mapRecursion = (obj) => {
+    console.log(obj)
+    return obj instanceof Object
+    ? Object.keys(obj).map((prop) =>
+      this.mapRecursion(obj[prop])
+    )
+    : `${obj} `
+  }
+  
   render() {
+    const {
+      users
+    } = this.props;
+
+    let headingTable = Object.keys(users[0]);
     return (
       <div>
         <div className="h2">Users</div>
         <table className="table table-hover">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Work place</th>
-                            <th></th>
+                          {headingTable.map( (text) =>
+                            <th>{text}</th>
+                          )}
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Ivan</td>
-                            <td>ivan@mail.ru</td>
-                            <td>+38-050-111-11-11</td>
-                            <td>Vodokanal</td>
-                            <td className="text-center show-on-hover"><b>x</b></td>
+                    {
+                      users.map( user =>
+                        <tr key={user.id}>
+                          {
+                            Object.keys(user).map( (key) => ( <td>{this.mapRecursion(user[key])}</td>))
+                          }
                         </tr>
-                        <tr>
-                            <td>Nicolay</td>
-                            <td>nicolay@mail.ru</td>
-                            <td>+38-050-222-22-22</td>
-                            <td>Gorgaz</td>
-                            <td className="text-center show-on-hover"><b>x</b></td>
-                        </tr>
+                      )
+                    }
                     </tbody>
             </table>
 

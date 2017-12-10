@@ -6,7 +6,7 @@ import React, {Component} from 'react';
 import '../../node_modules/normalize.css/normalize.css';
 import 'assets/css/style.scss';
 
-export default class Users extends Component {
+export default class AddingUser extends Component {
   constructor(props) {
     super(props)
   }
